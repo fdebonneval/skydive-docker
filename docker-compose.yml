@@ -4,9 +4,10 @@ skydive-agent:
    - "8081"
   privileged: true
   links:
-   - skydive-analyzer
+   - skydive-analyzer:analyzer
   volumes:
    - ./etc:/etc/skydive
+  entrypoint: /go/bin/skydive_agent
 
 skydive-analyzer:
   build: ./skydive-analyzer/
@@ -22,4 +23,5 @@ elasticsearch:
   ports:
    - "9200:9200"
    - "9300:9300"
+  log_driver: "none"
 
