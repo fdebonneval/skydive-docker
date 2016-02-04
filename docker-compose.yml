@@ -6,17 +6,16 @@ skydive-agent:
   links:
    - skydive-analyzer
   volumes:
-   - ./:/skydive
-#   cmd: skydive-agent --conf /skydive/skydive.ini
+   - ./:/etc/skydive
 
 skydive-analyzer:
   build: ./skydive-analyzer/
   ports: 
    - "8082:8082"
   links:
-   - elasticsearch
+   - elasticsearch:elasticsearch
   volumes:
-   - ./:/skydive
+   - ./:/etc/skydive
 
 elasticsearch:
   image: elasticsearch
