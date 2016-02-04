@@ -6,7 +6,7 @@ skydive-agent:
   links:
    - skydive-analyzer
   volumes:
-   - ./:/etc/skydive
+   - ./etc:/etc/skydive
 
 skydive-analyzer:
   build: ./skydive-analyzer/
@@ -15,7 +15,7 @@ skydive-analyzer:
   links:
    - elasticsearch:elasticsearch
   volumes:
-   - ./:/etc/skydive
+   - ./etc:/etc/skydive
 
 elasticsearch:
   image: elasticsearch
