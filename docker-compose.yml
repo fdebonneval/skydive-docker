@@ -1,27 +1,45 @@
-skydive-agent:
-  build: ./skydive-agent/
-  ports:
-   - "8081"
-  privileged: true
-  links:
-   - skydive-analyzer:analyzer
-  volumes:
-   - ./etc:/etc/skydive
-  entrypoint: /go/bin/skydive_agent
+version: '2'
+#Version 2 files are supported by Compose 1.6.0+ and require a Docker Engine of version 1.10.0+.
 
-skydive-analyzer:
-  build: ./skydive-analyzer/
-  ports: 
-   - "8082:8082"
-  links:
-   - elasticsearch:elasticsearch
-  volumes:
-   - ./etc:/etc/skydive
+services:
+  elasticsearch:
+    image: elasticsearch
+    container_name: elasticsearch
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+    # Filter Elasticsearch very verbose logs to none output
+    logging:
+      driver: "none"
+    networks:
+      - back
 
-elasticsearch:
-  image: elasticsearch
-  ports:
-   - "9200:9200"
-   - "9300:9300"
-  log_driver: "none"
+  skydive-agent:
+    build: ./skydive-agent/
+    ports:
+     - "8081"
+    privileged: true
+    volumes:
+     - ./etc:/etc/skydive
+    entrypoint: /go/bin/skydive_agent
+    networks:
+      - front
 
+  skydive-analyzer:
+    build: ./skydive-analyzer/
+    container_name: analyzer
+    depends_on:
+      - elasticsearch
+    ports: 
+     - "8082:8082"
+    volumes:
+     - ./etc:/etc/skydive
+    networks:
+      - front
+      - back
+
+networks:
+  front:
+    driver: bridge
+  back:
+    driver: bridge
