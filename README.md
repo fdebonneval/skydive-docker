@@ -4,7 +4,7 @@ Docker compose to test Skydive
 # Install docker-engine and docker-compose
 ## Install docker 1.10+
 
-## Install doncer-compose 1.6.0+
+## Install docker-compose 1.6.0+
 
 # Get the stack
 Retrieve the docker-compose stack from the Github repository
