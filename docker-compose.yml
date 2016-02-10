@@ -16,6 +16,8 @@ services:
 
   skydive-agent:
     build: ./skydive-agent/
+    depends_on:
+      - skydive-analyzer
     ports:
      - "8081"
     privileged: true
