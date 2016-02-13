@@ -2,6 +2,20 @@ version: '2'
 #Version 2 files are supported by Compose 1.6.0+ and require a Docker Engine of version 1.10.0+.
 
 services:
+  kibana:
+    image: kibana:latest
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+     - 5601:5601
+    logging:
+      driver: "none"
+    networks:
+      - back
+
   elasticsearch:
     image: elasticsearch
     container_name: elasticsearch
@@ -11,6 +25,8 @@ services:
     # Filter Elasticsearch very verbose logs to none output
     logging:
       driver: "none"
+    volumes:
+      - ./data/esdata:/usr/share/elasticsearch/data
     networks:
       - back
 
@@ -19,7 +35,8 @@ services:
     depends_on:
       - skydive-analyzer
     ports:
-     - "8081"
+     - "8081:8081"
+     - "6345:6345/udp"
     privileged: true
     volumes:
      - ./etc:/etc/skydive
@@ -33,6 +50,7 @@ services:
       - elasticsearch
     ports: 
      - "8082:8082"
+     - "8082:8082/udp"
     volumes:
      - ./etc:/etc/skydive
     networks:
