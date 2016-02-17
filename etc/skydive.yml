@@ -1,0 +1,33 @@
+cache:
+  # expiration time in second
+  expire: 300
+  # cleanup interval in second
+  cleanup: 30
+
+analyzer:
+  flowtable_expire: 5
+  listen: 8082
+
+agent:
+  flowtable_expire: 5
+  listen: 8081
+  analyzers: 127.0.0.1:8082
+
+sflow:
+  # listen parameter for the sflow agent, Format: addr:port.
+  # Default addr is 127.0.0.1
+  listen: 6345
+
+ovs:
+  # ovsdb connection, Format: addr:port
+  # You need to authorize connexion to ovsdb agent at least locally
+  # % sudo ovs-appctl -t ovsdb-server ovsdb-server/add-remote ptcp:6400:127.0.0.1
+  ovsdb: 6400
+
+graph:
+  # graph backend memory, gremlin
+  backend: memory
+  gremlin: 127.0.0.1:8182
+
+storage:
+  elasticsearch: elasticsearch:9200

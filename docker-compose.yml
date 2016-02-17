@@ -31,7 +31,7 @@ services:
       - back
 
   skydive-agent:
-    build: ./skydive-agent/
+    build: ./skydive/
     depends_on:
       - skydive-analyzer
     ports:
@@ -40,11 +40,12 @@ services:
     privileged: true
     volumes:
      - ./etc:/etc/skydive
-    entrypoint: /go/bin/skydive_agent
+#    entrypoint: /go/bin/skydive_agent
+    command: /go/bin/skydive agent --conf /etc/skydive/skydive.yml
     network_mode: "host"
 
   skydive-analyzer:
-    build: ./skydive-analyzer/
+    build: ./skydive/
     container_name: analyzer
     depends_on:
       - elasticsearch
@@ -53,6 +54,7 @@ services:
      - "8082:8082/udp"
     volumes:
      - ./etc:/etc/skydive
+    command: /go/bin/skydive analyzer --conf /etc/skydive/skydive.yml
     networks:
       - front
       - back
