@@ -6,17 +6,33 @@ cache:
 
 analyzer:
   flowtable_expire: 5
-  listen: 8082
+  listen: 0.0.0.0:8082
 
 agent:
   flowtable_expire: 5
   listen: 8081
-  analyzers: 127.0.0.1:8082
+  analyzers: localhost:8082
+  topology:
+    # Probes used to capture topology informations like interfaces,
+    # bridges, namespaces, etc...
+    # Available: netlink, netns, ovsdb, docker, neutron.
+    # Default: netlink, netns
+    probes:
+      - netlink
+      - netns
+      - ovsdb
+#      - docker
+      - neutron
+  flow:
+    # Probes used to capture traffic.
+    probes:
+      - ovssflow
+
 
 sflow:
   # listen parameter for the sflow agent, Format: addr:port.
   # Default addr is 127.0.0.1
-  listen: 6345
+  listen: 0.0.0.0:6345
 
 ovs:
   # ovsdb connection, Format: addr:port

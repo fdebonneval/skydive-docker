@@ -40,6 +40,7 @@ services:
     privileged: true
     volumes:
      - ./etc:/etc/skydive
+     - /var/run/docker.sock:/var/run/docker.sock
 #    entrypoint: /go/bin/skydive_agent
     command: /go/bin/skydive agent --conf /etc/skydive/skydive.yml
     network_mode: "host"
