@@ -47,3 +47,22 @@ graph:
 
 storage:
   elasticsearch: elasticsearch:9200
+
+logging:
+  default: INFO
+  topology/probes: INFO
+  topology/graph: WARNING
+
+auth:
+  # specify the type of authentication mechanism: noauth, basic, keystone (default: noauth)
+  type: none
+    # basic:
+      # file: /etc/skydive/htpasswd
+
+etcd:
+  # when 'embedded' is set to true, the analyzer will start an embedded etcd server
+  embedded: true
+
+  # both the analyzers and the agents make use of etcd
+  servers:
+    - http://0.0.0.0:2379

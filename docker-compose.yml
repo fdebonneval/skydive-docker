@@ -65,6 +65,7 @@ services:
     depends_on:
       - elasticsearch
     ports: 
+     - "2379:2379"
      - "8082:8082"
      - "8082:8082/udp"
     volumes:
